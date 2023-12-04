@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
+import { Outlet } from "react-router-dom";
 
-function Layout({ children } : { children: ReactElement }) {
+function Layout() {
     return (
       <div className="relative min-h-screen bg-gradient-to-b from-[#BDDAFF] to-white">
         <svg
@@ -121,10 +121,11 @@ function Layout({ children } : { children: ReactElement }) {
         </svg>
         <main className="flex flex-col items-center pb-16">
           <header className="h-24 w-full border-b-brand border flex justify-center items-center">
-            <div className="font-bold text-lg">urogy.in</div>
+            <div className="font-bold text-xl text-brand">urogy.in</div>
           </header>
   
-          {children}
+          <Outlet />
+
         </main>
       </div>
     );
