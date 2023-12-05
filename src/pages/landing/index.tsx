@@ -1,4 +1,5 @@
 import Button from "@/components/button";
+import routes from "@/utils/routes";
 
 function HomePage() {
   return (
@@ -37,7 +38,7 @@ function HomePage() {
         </div>
       </div>
 
-      <a href="/quiz">
+      <a href={routes.QUIZ} className="mt-16">
         <Button>Start the Questionnaire</Button>
       </a>
     </>

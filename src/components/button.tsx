@@ -106,7 +106,7 @@ function Button({
 }: ButtonProps) {
   const bgClasses = getColorClass(variant, colorScheme)
     const buttonClasses = classNames(
-      'mt-16 rounded-full h-[56px] px-14 whitespace-nowrap',
+      'rounded-full h-[56px] px-14 whitespace-nowrap',
       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
       bgClasses,
       className,

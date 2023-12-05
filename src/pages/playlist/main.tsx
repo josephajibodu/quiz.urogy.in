@@ -1,9 +1,10 @@
 import Button from "@/components/button";
+import routes from "@/utils/routes";
 
 function MainPlaylistPage() {
   return (
     <>
-      <section className="text-brand flex w-full flex-col py-12">
+      <section className="text-brand flex w-full flex-col py-12 px-4">
         <h2 className="text-xl font-bold mb-10">
           Your Tailored Playlist is Ready!
         </h2>
@@ -17,7 +18,7 @@ function MainPlaylistPage() {
           target="_blank"
           rel="noreferrer"
           href="https://youtube.com"
-          className="w-fit"
+          className="w-fit mt-8"
         >
           <Button className="w-fit flex items-center gap-2">
             View Playlist on Youtube
@@ -38,13 +39,13 @@ function MainPlaylistPage() {
         </a>
       </section>
 
-      <section className="text-brand w-full">
-        <div className="flex w-full gap-4">
-          <div className="w-7/12">
-            <div className="aspect-video h-[400px] border-brand border-2 rounded-xl"></div>
+      <section className="text-brand w-full px-4">
+        <div className="flex flex-col lg:flex-row w-full gap-4">
+          <div className="w-full lg:w-7/12">
+            <div className="aspect-video lg:h-[400px] border-brand border-2 rounded-xl"></div>
           </div>
 
-          <div className="w-5/12 flex flex-col h-[400px] relative">
+          <div className="w-full lg:w-5/12 flex flex-col h-[400px] relative">
             <div className="overflow-y-scroll pb-12">
               {Array(6)
                 .fill(1)
@@ -84,7 +85,7 @@ function MainPlaylistPage() {
           </div>
         </div>
 
-        <a href="#" className="flex gap-4 text-brand underline text-base my-8">
+        <a href={routes.ADDITIONAL_RESOURCES} className="flex gap-4 text-brand underline text-base my-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

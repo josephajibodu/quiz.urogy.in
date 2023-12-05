@@ -8,29 +8,30 @@ import QuizPage from '@/pages/quiz/index'
 import PlaylistPage from '@/pages/playlist/index'
 import MainPlaylistPage from '@/pages/playlist/main'
 import AdditionalResourcesPage from '@/pages/additional-resources/index'
+import routes from './utils/routes'
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        path: '/',
+        path: routes.LANDING_PAGE,
         element: <HomePage />,
       },
       {
-        path: '/quiz',
+        path: routes.QUIZ,
         element: <QuizPage />,
       },
       {
-        path: '/generating-playlist',
+        path: routes.LOADING_PLAYLIST,
         element: <PlaylistPage />,
       },
       {
-        path: '/personalized-playlist',
+        path: routes.PERSONALIZED_PLAYLIST,
         element: <MainPlaylistPage />,
       },
       {
-        path: '/additional-resources',
+        path: routes.ADDITIONAL_RESOURCES,
         element: <AdditionalResourcesPage />,
       }
     ]
