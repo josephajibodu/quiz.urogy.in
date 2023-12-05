@@ -6,6 +6,7 @@ import HomePage from './pages/landing/index.tsx'
 import Layout from './components/layout.tsx'
 import QuizPage from './pages/quiz/index.tsx'
 import PlaylistPage from './pages/playlist/index.tsx'
+import MainPlaylistPage from './pages/playlist/main.tsx'
 
 const router = createBrowserRouter([
   {
@@ -20,8 +21,12 @@ const router = createBrowserRouter([
         Component: QuizPage,
       },
       {
-        path: '/personalized-playlist',
+        path: '/generating-playlist',
         Component: PlaylistPage,
+      },
+      {
+        path: '/personalized-playlist',
+        Component: MainPlaylistPage,
       }
     ]
   }

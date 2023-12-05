@@ -101,6 +101,7 @@ function Button({
   variant = "outline",
   disabled,
   isLoading,
+  className,
   ...props
 }: ButtonProps) {
   const bgClasses = getColorClass(variant, colorScheme)
@@ -108,6 +109,7 @@ function Button({
       'mt-16 rounded-full h-[56px] px-14 whitespace-nowrap',
       'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
       bgClasses,
+      className,
       {
         // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         'opacity-50 cursor-not-allowed': disabled || isLoading,
