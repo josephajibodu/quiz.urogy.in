@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import spinnerAnimation from '../../assets/animations/spinner-2.json';
+import spinnerAnimation from '@/assets/animations/spinner-2.json';
 
 function PlaylistPage() {
   return (
@@ -9,7 +9,7 @@ function PlaylistPage() {
         <p className="text-3xl text-center leading-relaxed">Your personalized playlist is being created based on your responses. Sit tight as we curate content just for you.</p>
 
         <div className="flex justify-center mt-10">
-          <Lottie className="w-48" animationData={spinnerAnimation} loop />
+          <Lottie className="w-48" animationData={spinnerAnimation as unknown} loop />
         </div>
       </section>
     </>

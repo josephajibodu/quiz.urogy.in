@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Progress from "../../components/progress";
-import Button from "../../components/button";
-import QuizOption from "../../components/quiz-option";
+import Progress from "@/components/progress";
+import Button from "@/components/button";
+import QuizOption from "@/components/quiz-option";
 import { useNavigate } from "react-router-dom";
 
 const options = [

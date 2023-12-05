@@ -2,12 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import '@/index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HomePage from '@/pages/landing/index.tsx'
-import Layout from '@/components/layout.tsx'
-import QuizPage from '@/pages/quiz/index.tsx'
-import PlaylistPage from '@/pages/playlist/index.tsx'
-import MainPlaylistPage from '@/pages/playlist/main.tsx'
-import AdditionalResourcesPage from '@/pages/additional-resources/index.tsx'
+import HomePage from '@/pages/landing/index'
+import Layout from '@/components/layout'
+import QuizPage from '@/pages/quiz/index'
+import PlaylistPage from '@/pages/playlist/index'
+import MainPlaylistPage from '@/pages/playlist/main'
+import AdditionalResourcesPage from '@/pages/additional-resources/index'
 
 const router = createBrowserRouter([
   {
