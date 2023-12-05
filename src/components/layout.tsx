@@ -4,7 +4,7 @@ function Layout() {
     return (
       <div className="relative min-h-screen bg-gradient-to-b from-[#BDDAFF] to-white">
         <svg
-          className="absolute -top-24 right-0 lg:top-0 lg:right-0 w-48 lg:w-[415px]"
+          className="absolute -top-24 right-0 lg:top-0 lg:right-0 w-48 lg:w-[415px] pointer-events-none"
           width="415"
           height="539"
           viewBox="0 0 415 539"
@@ -62,7 +62,7 @@ function Layout() {
           />
         </svg>
         <svg
-          className="absolute -left-48 top-[30%] lg:top-[30%] lg:w-[343px]"
+          className="absolute -left-48 top-[30%] lg:top-[30%] lg:w-[343px] pointer-events-none"
           width="343"
           height="688"
           viewBox="0 0 343 688"
