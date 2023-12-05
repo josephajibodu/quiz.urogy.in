@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Progress from "../../components/progress";
 import Button from "../../components/button";
 import QuizOption from "../../components/quiz-option";
@@ -59,8 +59,6 @@ function QuizPage() {
   };
 
   const handleSubmit = () => {
-    console.log("submitting quiz");
-
     navigate('/personalized-playlist')
   };
 
