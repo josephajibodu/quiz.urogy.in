@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Progress from "../../components/progress";
 import Button from "../../components/button";
 import QuizOption from "../../components/quiz-option";
+import { useNavigate } from "react-router-dom";
 
 const options = [
   { id: 1, text: "None of the time" },
@@ -42,6 +43,7 @@ const questions = [
 ];
 
 function QuizPage() {
+  const navigate = useNavigate();
   const [totalNoOfQuiz] = useState(6);
   const [currentQuizNo, setCurrentQuizNo] = useState(1);
   const [answers, setAnswers] = useState<number[]>(Array(6).fill(null));
@@ -58,12 +60,13 @@ function QuizPage() {
 
   const handleSubmit = () => {
     console.log("submitting quiz");
+
+    navigate('/personalized-playlist')
   };
 
   const handleSelectOption = (value: number) => {
     const updatedAnswers = [...answers];
     updatedAnswers[currentQuizNo - 1] = value;
-    console.log(updatedAnswers);
     setAnswers(updatedAnswers);
   };
 
@@ -110,7 +113,7 @@ function QuizPage() {
           </Button>
 
           {currentQuizNo == totalNoOfQuiz ? (
-            <Button onClick={handleSubmit} variant="solid">
+            <Button onClick={handleSubmit} variant="solid" colorScheme="green">
               Submit
             </Button>
           ) : (

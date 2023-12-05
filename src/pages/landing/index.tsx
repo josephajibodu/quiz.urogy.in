@@ -1,3 +1,5 @@
+import Button from "../../components/button";
+
 function HomePage() {
   return (
     <>
@@ -35,9 +37,9 @@ function HomePage() {
         </div>
       </div>
 
-      <button className="border-brand border-2 mt-16 rounded-full h-[56px] px-14 hover:bg-accent hover:text-white active:bg-brand">
-        Start the Questionnaire
-      </button>
+      <a href="/quiz">
+        <Button>Start the Questionnaire</Button>
+      </a>
     </>
   );
 }

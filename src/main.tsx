@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomePage from './pages/landing/index.tsx'
 import Layout from './components/layout.tsx'
 import QuizPage from './pages/quiz/index.tsx'
+import PlaylistPage from './pages/playlist/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: '/quiz',
         Component: QuizPage,
+      },
+      {
+        path: '/personalized-playlist',
+        Component: PlaylistPage,
       }
     ]
   }
