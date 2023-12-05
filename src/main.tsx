@@ -7,6 +7,7 @@ import Layout from './components/layout.tsx'
 import QuizPage from './pages/quiz/index.tsx'
 import PlaylistPage from './pages/playlist/index.tsx'
 import MainPlaylistPage from './pages/playlist/main.tsx'
+import AdditionalResourcesPage from './pages/additional-resources/index.tsx'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/personalized-playlist',
         Component: MainPlaylistPage,
+      },
+      {
+        path: '/additional-resources',
+        Component: AdditionalResourcesPage,
       }
     ]
   }

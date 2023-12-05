@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <div className="relative h-screen min-h-screen bg-gradient-to-b from-[#BDDAFF] to-white">
+    <div className="relative min-h-screen bg-gradient-to-b from-[#BDDAFF] to-white">
       <svg
         className="absolute -top-24 right-0 lg:top-0 lg:right-0 w-48 lg:w-[415px] pointer-events-none"
         width="415"

@@ -1,6 +1,6 @@
 import Button from "../../components/button";
 
-function HomePage() {
+function AdditionalResourcesPage() {
   return (
     <>
       <h1 className="text-center text-5xl lg:text-8xl mt-20 lg:mt-40 leading-[4rem] lg:leading-[6.4rem]">
@@ -44,4 +44,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default AdditionalResourcesPage;
