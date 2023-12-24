@@ -4,7 +4,7 @@ import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
 import { useActionData, useNavigation, useSubmit } from "react-router-dom";
 import toast from "react-hot-toast";
-import QuizAction from "./action";
+import QuizAction, { ActionData } from "./action";
 import { stat } from "fs";
 import Loader from "./loading";
 
@@ -73,9 +73,9 @@ function QuizPage() {
 
   const handleSubmit = () => {
     toast.dismiss();
-    const data = { responses: answers, invitation_code: "2eaf43c306f19738" };
+    const data : ActionData = { responses: answers, invitation_code: "cf4cd50da8a7a312", action: "submit-quiz" };
 
-    const quizNotCompleted = data.responses.some(response => typeof(response) != 'number');
+    const quizNotCompleted = data.responses!.some(response => typeof(response) != 'number');
 
     if (quizNotCompleted) {
       return toast.error('You must select an option for all questions')
