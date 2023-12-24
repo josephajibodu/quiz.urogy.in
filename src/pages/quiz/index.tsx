@@ -4,6 +4,7 @@ import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
 import { useActionData, useSubmit } from "react-router-dom";
 import toast from "react-hot-toast";
+import QuizAction from "./action";
 
 const options = [
   { id: 0, text: "None of the time" },
@@ -69,7 +70,7 @@ function QuizPage() {
 
   const handleSubmit = () => {
     toast.dismiss();
-    const data = { responses: answers, invitation_code: "c74fbaffe95049a0" };
+    const data = { responses: answers, invitation_code: "2eaf43c306f19738" };
 
     const quizNotCompleted = data.responses.some(response => typeof(response) != 'number');
 
@@ -162,3 +163,4 @@ function QuizPage() {
 }
 
 export default QuizPage;
+QuizPage.action = QuizAction

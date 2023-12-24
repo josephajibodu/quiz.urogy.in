@@ -1,9 +1,9 @@
-import { ActionFunction } from "react-router"
+import { ActionFunction, json } from "react-router"
 
 const QuizAction: ActionFunction = async ({ request }) => {
     const data = await request.json() as { responses: string, invitation_code: string }
 
-    return await fetch(
+    const res = await fetch(
         'http://localhost:8000/questionnaire',
         {
             method: 'post',
@@ -13,6 +13,14 @@ const QuizAction: ActionFunction = async ({ request }) => {
             },
         }
     )
+
+    const resData = await res.json() as { message: string };
+
+    if (!res.ok) {
+        throw json(resData, { status: res.status });
+    }
+
+    return resData
 }
 
 export default QuizAction;

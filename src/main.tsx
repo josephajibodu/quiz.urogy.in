@@ -3,18 +3,20 @@ import ReactDOM from 'react-dom/client'
 import '@/index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import HomePage from '@/pages/landing/index'
-import Layout from '@/components/layout'
+import Layout from '@/pages/layout'
 import QuizPage from '@/pages/quiz/index'
 import PlaylistPage from '@/pages/playlist/index'
 import MainPlaylistPage from '@/pages/playlist/main'
 import AdditionalResourcesPage from '@/pages/additional-resources/index'
 import routes from './utils/routes'
 import { Toaster } from 'react-hot-toast'
-import QuizAction from './pages/quiz/action'
+import Error from './pages/error'
+
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    ErrorBoundary: Error,
     children: [
       {
         path: routes.LANDING_PAGE,
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
       {
         path: routes.QUIZ,
         element: <QuizPage />,
-        action: QuizAction
+        action: QuizPage.action
       },
       {
         path: routes.LOADING_PLAYLIST,
