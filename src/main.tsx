@@ -2,12 +2,11 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import '@/index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HomePage from '@/pages/landing/index'
+import HomePage from '@/pages/landing'
 import Layout from '@/pages/layout'
-import QuizPage from '@/pages/quiz/index'
-import PlaylistPage from '@/pages/playlist/index'
-import MainPlaylistPage from '@/pages/playlist/main'
-import AdditionalResourcesPage from '@/pages/additional-resources/index'
+import QuizPage from '@/pages/quiz'
+import PlaylistPage from '@/pages/playlist'
+import AdditionalResourcesPage from '@/pages/additional-resources'
 import routes from './utils/routes'
 import { Toaster } from 'react-hot-toast'
 import Error from './pages/error'
@@ -28,12 +27,9 @@ const router = createBrowserRouter([
         action: QuizPage.action
       },
       {
-        path: routes.LOADING_PLAYLIST,
-        element: <PlaylistPage />,
-      },
-      {
         path: routes.PERSONALIZED_PLAYLIST,
-        element: <MainPlaylistPage />,
+        element: <PlaylistPage />,
+        loader: PlaylistPage.loader
       },
       {
         path: routes.ADDITIONAL_RESOURCES,
@@ -43,6 +39,7 @@ const router = createBrowserRouter([
   }
 ])
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />

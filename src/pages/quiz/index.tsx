@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Progress from "@/components/progress";
 import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
-import { useActionData, useSubmit } from "react-router-dom";
+import { useActionData, useNavigation, useSubmit } from "react-router-dom";
 import toast from "react-hot-toast";
 import QuizAction from "./action";
+import { stat } from "fs";
+import Loader from "./loading";
 
 const options = [
   { id: 0, text: "None of the time" },
@@ -51,6 +53,7 @@ function QuizPage() {
   const [answers, setAnswers] = useState<number[]>(Array(6).fill(null));
 
   const actionData = useActionData()
+  const { state } = useNavigation()
 
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
@@ -98,6 +101,8 @@ function QuizPage() {
   useEffect(() => {
     console.log("Action data is here o: ", actionData)
   }, [actionData])
+
+  if (state !== 'idle') return <Loader />
 
   return (
     <>
