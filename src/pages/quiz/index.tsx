@@ -1,16 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Progress from "@/components/progress";
 import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
-import { useNavigate } from "react-router-dom";
+import { useActionData, useSubmit } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const options = [
-  { id: 1, text: "None of the time" },
-  { id: 2, text: "Rarely" },
-  { id: 3, text: "Once in a while" },
-  { id: 4, text: "Often" },
-  { id: 5, text: "Most of the time" },
-  { id: 6, text: "All of the time" },
+  { id: 0, text: "None of the time" },
+  { id: 1, text: "Rarely" },
+  { id: 2, text: "Once in a while" },
+  { id: 3, text: "Often" },
+  { id: 4, text: "Most of the time" },
+  { id: 5, text: "All of the time" },
 ];
 
 const questions = [
@@ -43,10 +44,12 @@ const questions = [
 ];
 
 function QuizPage() {
-  const navigate = useNavigate();
+  const submit = useSubmit();
   const [totalNoOfQuiz] = useState(6);
-  const [currentQuizNo, setCurrentQuizNo] = useState(1);
+  const [currentQuizNo, setCurrentQuizNo] = useState(6);
   const [answers, setAnswers] = useState<number[]>(Array(6).fill(null));
+
+  const actionData = useActionData()
 
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
@@ -55,11 +58,30 @@ function QuizPage() {
   };
 
   const handleNextAction = () => {
+    toast.dismiss();
+
+    if (typeof(answers[currentQuizNo - 1]) != 'number') {
+      return toast.error('You must select an option')
+    }
+
     setCurrentQuizNo(currentQuizNo + 1);
   };
 
   const handleSubmit = () => {
-    navigate('/personalized-playlist')
+    toast.dismiss();
+    const data = { responses: answers, invitation_code: "c74fbaffe95049a0" };
+
+    const quizNotCompleted = data.responses.some(response => typeof(response) != 'number');
+
+    if (quizNotCompleted) {
+      return toast.error('You must select an option for all questions')
+    }
+
+    submit(data, {
+      method: 'POST',
+      action: '/quiz',
+      encType: 'application/json',
+    })
   };
 
   const handleSelectOption = (value: number) => {
@@ -68,16 +90,26 @@ function QuizPage() {
     setAnswers(updatedAnswers);
   };
 
+  useEffect(() => {
+    setAnswers([2,3,5,4,1,3])
+  }, [])
+
+  useEffect(() => {
+    console.log("Action data is here o: ", actionData)
+  }, [actionData])
+
   return (
     <>
       <section className="flex flex-col items-start w-full px-4 lg:px-16 pt-12">
+        
         <div className="text-brand flex items-center gap-4">
           <span>
             {currentQuizNo}/{totalNoOfQuiz} Completed
           </span>
           <Progress value={currentQuizNo} max={totalNoOfQuiz} />
         </div>
-        <div className="py-8 lg:py-20">
+
+        <div className="flex flex-col py-8 lg:py-20 gap-8 lg:gap-12">
           {!questions[currentQuizNo - 1].isFullQuestion && (
             <p className="text-[1rem] lg:text-4xl lg:leading-[4rem] text-brand max-w-prose">
               Do you leak urine (even small drops), wet yourself, or wet your
@@ -86,7 +118,7 @@ function QuizPage() {
           )}
 
           <p
-            className="text-2xl lg:text-5xl lg:leading-[4rem] mt-8 lg:mt-12 text-brand max-w-prose"
+            className="text-2xl lg:text-5xl lg:leading-[4rem] text-brand max-w-prose"
             dangerouslySetInnerHTML={{
               __html: questions[currentQuizNo - 1].value,
             }}
