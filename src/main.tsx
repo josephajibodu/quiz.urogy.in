@@ -32,7 +32,8 @@ const router = createBrowserRouter([
       {
         path: routes.PERSONALIZED_PLAYLIST,
         element: <PlaylistPage />,
-        loader: PlaylistPage.loader
+        loader: PlaylistPage.loader,
+        ErrorBoundary: PlaylistPage.error
       },
       {
         path: routes.ADDITIONAL_RESOURCES,

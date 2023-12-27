@@ -2,8 +2,26 @@ import Button from "@/components/button";
 import routes from "@/utils/routes";
 import PlaylistLoader from "./loader";
 import Alink from "@/components/a-link";
+import PlaylistError from "./error";
+import { useActionData, useSearchParams, useSubmit } from "react-router-dom";
 
 function PlaylistPage() {
+  const submit = useSubmit()
+  const [searchParam] = useSearchParams();
+  const actionData = useActionData()
+  
+  const handlePlaylistGeneration = () => {
+    const data = {
+      invitation_code: searchParam.get('invitation_code')
+    }
+
+    submit(data, {
+      action: routes.PERSONALIZED_PLAYLIST,
+      method: 'POST',
+      encType: 'application/json',
+    })
+  }
+
   return (
     <>
       <section className="text-brand flex w-full flex-col py-12 px-4">
@@ -111,3 +129,4 @@ function PlaylistPage() {
 
 export default PlaylistPage;
 PlaylistPage.loader = PlaylistLoader
+PlaylistPage.error = PlaylistError

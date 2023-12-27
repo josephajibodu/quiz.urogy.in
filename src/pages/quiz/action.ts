@@ -1,3 +1,4 @@
+import PlaylistAction from "@/actions/playlist-action";
 import routes from "@/utils/routes";
 import { ActionFunction, json, redirect } from "react-router"
 
@@ -46,25 +47,8 @@ const submitQuiz = async (data: Omit<ActionData, 'action'>) => {
 }
 
 const generatePlaylist = async (data: Pick<ActionData, 'invitation_code'>) => {
-    const res = await fetch(
-        'http://localhost:8000/questionnaire/playlist',
-        {
-            method: 'post',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-    )
+    await PlaylistAction.generate(data) as { message: string };
 
-    const resData = await res.json() as { message: string };
-
-    if (!res.ok) {
-        throw json(resData, { status: res.status });
-    }
-
-    // redirect to the playlist generation page instead
-    // with the invitation code
     return redirect(`${routes.PERSONALIZED_PLAYLIST}?invitation_code=${data.invitation_code}`)
 }
 
