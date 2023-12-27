@@ -1,3 +1,4 @@
+import Alink from "@/components/a-link";
 import Button from "@/components/button";
 import NotFoundIcon from "@/components/not-found-icon";
 import routes from "@/utils/routes";
@@ -35,11 +36,11 @@ function Error() {
                         Unexpected Error
                     </p>
                     <p className="text-lg md:text-xl lg:text-2xl text-brand my-12">
-                        {error.message}
+                        {error.data?.message ?? error.message}
                     </p>
                 </>}
 
-                <a href={routes.LANDING_PAGE} className="mt-16">
+                <Alink to={routes.LANDING_PAGE} className="mt-16">
                     <Button className="flex justify-center items-center gap-2">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +56,7 @@ function Error() {
                     </svg>
                     <span>Return Home</span>
                     </Button>
-                </a>
+                </Alink>
                 </div>
                 <div className="w-1/2 lg:h-full flex lg:items-end justify-center p-4">
                 <NotFoundIcon />

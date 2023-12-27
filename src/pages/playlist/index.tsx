@@ -1,6 +1,7 @@
 import Button from "@/components/button";
 import routes from "@/utils/routes";
 import PlaylistLoader from "./loader";
+import Alink from "@/components/a-link";
 
 function PlaylistPage() {
   return (
@@ -86,7 +87,7 @@ function PlaylistPage() {
           </div>
         </div>
 
-        <a href={routes.ADDITIONAL_RESOURCES} className="flex gap-4 text-brand underline text-base my-8">
+        <Alink to={routes.ADDITIONAL_RESOURCES} className="flex gap-4 text-brand underline text-base my-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -102,7 +103,7 @@ function PlaylistPage() {
             />
           </svg>
           Checkout Additional Resources
-        </a>
+        </Alink>
       </section>
     </>
   );

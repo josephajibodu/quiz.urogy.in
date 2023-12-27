@@ -1,3 +1,4 @@
+import Alink from "@/components/a-link";
 import Button from "@/components/button";
 import routes from "@/utils/routes";
 import { useState } from "react";
@@ -96,9 +97,9 @@ function HomePage() {
 
       </div>
 
-      <a href={routes.QUIZ} className="mt-16">
+      <Alink to={routes.QUIZ} className="mt-16">
         <Button>Start the Questionnaire</Button>
-      </a>
+      </Alink>
     </>
   );
 }

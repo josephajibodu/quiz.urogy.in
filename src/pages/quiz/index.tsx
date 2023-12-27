@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import Progress from "@/components/progress";
 import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
-import { useActionData, useNavigation, useSubmit } from "react-router-dom";
+import {
+  useLoaderData,
+  useLocation,
+  useNavigation,
+  useSearchParams,
+  useSubmit,
+} from "react-router-dom";
 import toast from "react-hot-toast";
 import QuizAction, { ActionData } from "./action";
-import { stat } from "fs";
 import Loader from "./loading";
+import QuizLoader from "./loader";
 
 const options = [
   { id: 0, text: "None of the time" },
@@ -52,8 +58,11 @@ function QuizPage() {
   const [currentQuizNo, setCurrentQuizNo] = useState(6);
   const [answers, setAnswers] = useState<number[]>(Array(6).fill(null));
 
-  const actionData = useActionData()
-  const { state } = useNavigation()
+  const invitationCode = useLoaderData() as string;
+  const { state } = useNavigation();
+  const [searchParam] = useSearchParams();
+  const [actionType, setActionType] =
+    useState<ActionData["action"]>("submit-quiz");
 
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
@@ -64,8 +73,8 @@ function QuizPage() {
   const handleNextAction = () => {
     toast.dismiss();
 
-    if (typeof(answers[currentQuizNo - 1]) != 'number') {
-      return toast.error('You must select an option')
+    if (typeof answers[currentQuizNo - 1] != "number") {
+      return toast.error("You must select an option");
     }
 
     setCurrentQuizNo(currentQuizNo + 1);
@@ -73,19 +82,42 @@ function QuizPage() {
 
   const handleSubmit = () => {
     toast.dismiss();
-    const data : ActionData = { responses: answers, invitation_code: "cf4cd50da8a7a312", action: "submit-quiz" };
+    const data: ActionData = {
+      responses: answers,
+      invitation_code: invitationCode,
+      action: "submit-quiz",
+    };
 
-    const quizNotCompleted = data.responses!.some(response => typeof(response) != 'number');
+    const quizNotCompleted = data.responses!.some(
+      (response) => typeof response != "number"
+    );
 
     if (quizNotCompleted) {
-      return toast.error('You must select an option for all questions')
+      return toast.error("You must select an option for all questions");
     }
 
     submit(data, {
-      method: 'POST',
-      action: '/quiz',
-      encType: 'application/json',
-    })
+      method: "POST",
+      action: `/quiz?${searchParam.toString()}`,
+      encType: "application/json",
+    });
+
+    setActionType("generate-playlist");
+  };
+
+  const generatePlaylist = () => {
+    console.log("generating playlist");
+
+    const data: ActionData = {
+      invitation_code: invitationCode,
+      action: "generate-playlist",
+    };
+
+    submit(data, {
+      method: "POST",
+      action: `/quiz?${searchParam.toString()}`,
+      encType: "application/json",
+    });
   };
 
   const handleSelectOption = (value: number) => {
@@ -95,19 +127,21 @@ function QuizPage() {
   };
 
   useEffect(() => {
-    setAnswers([2,3,5,4,1,3])
-  }, [])
+    setAnswers([2, 3, 5, 4, 1, 3]);
+  }, []);
 
   useEffect(() => {
-    console.log("Action data is here o: ", actionData)
-  }, [actionData])
+    if (actionType == "generate-playlist" && state == "idle") {
+      console.log("can generate playlist now");
+      generatePlaylist();
+    }
+  }, [actionType, state]);
 
-  if (state !== 'idle') return <Loader />
+  if (state !== "idle") return <Loader />;
 
   return (
     <>
       <section className="flex flex-col items-start w-full px-4 lg:px-16 pt-12">
-        
         <div className="text-brand flex items-center gap-4">
           <span>
             {currentQuizNo}/{totalNoOfQuiz} Completed
@@ -168,4 +202,5 @@ function QuizPage() {
 }
 
 export default QuizPage;
-QuizPage.action = QuizAction
+QuizPage.action = QuizAction;
+QuizPage.loader = QuizLoader;

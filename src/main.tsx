@@ -10,12 +10,14 @@ import AdditionalResourcesPage from '@/pages/additional-resources'
 import routes from './utils/routes'
 import { Toaster } from 'react-hot-toast'
 import Error from './pages/error'
+import RootLoader from './pages/loader'
 
 
 const router = createBrowserRouter([
   {
     element: <Layout />,
     ErrorBoundary: Error,
+    loader: RootLoader,
     children: [
       {
         path: routes.LANDING_PAGE,
@@ -24,7 +26,8 @@ const router = createBrowserRouter([
       {
         path: routes.QUIZ,
         element: <QuizPage />,
-        action: QuizPage.action
+        action: QuizPage.action,
+        loader: QuizPage.loader,
       },
       {
         path: routes.PERSONALIZED_PLAYLIST,
