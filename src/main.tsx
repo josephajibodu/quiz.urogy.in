@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       {
         path: routes.LANDING_PAGE,
         element: <HomePage />,
+        loader: HomePage.loader
       },
       {
         path: routes.QUIZ,
@@ -33,7 +34,8 @@ const router = createBrowserRouter([
         path: routes.PERSONALIZED_PLAYLIST,
         element: <PlaylistPage />,
         loader: PlaylistPage.loader,
-        ErrorBoundary: PlaylistPage.error
+        ErrorBoundary: PlaylistPage.error,
+        action: PlaylistPage.action
       },
       {
         path: routes.ADDITIONAL_RESOURCES,

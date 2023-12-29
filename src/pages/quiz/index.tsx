@@ -126,6 +126,7 @@ function QuizPage() {
     setAnswers(updatedAnswers);
   };
 
+  // TODO: remove this after testing
   useEffect(() => {
     setAnswers([2, 3, 5, 4, 1, 3]);
   }, []);

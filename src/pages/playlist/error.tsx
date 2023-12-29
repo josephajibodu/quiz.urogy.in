@@ -8,6 +8,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "react-router";
+import { useSearchParams, useSubmit } from "react-router-dom";
 
 function PlaylistError() {
   const error = useRouteError() as ErrorResponse;
@@ -15,10 +16,6 @@ function PlaylistError() {
 
   if (!isResponseError) {
     throw error;
-  }
-
-  if (error.data.response_code != 'PLAYLIST_NOT_GENERATED') {
-    throw error
   }
 
   return (
@@ -38,7 +35,7 @@ function PlaylistError() {
           </>
         )}
 
-        <Button className="flex justify-center items-center gap-2" variant="solid">
+        {/* <Button onClick={handlePlaylistGeneration} className="flex justify-center items-center gap-2" variant="solid">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -54,7 +51,7 @@ function PlaylistError() {
             />
           </svg>
           Generate Playlist
-        </Button>
+        </Button> */}
 
         <Alink to={routes.LANDING_PAGE} className="mt-16">
           <Button className="flex justify-center items-center gap-2">

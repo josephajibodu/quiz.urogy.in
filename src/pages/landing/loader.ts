@@ -1,8 +1,15 @@
+import { StatusCodes } from "http-status-codes";
 import { LoaderFunction, json } from "react-router";
 
-const PlaylistLoader: LoaderFunction = async ({ request }) => {
+const MainLoader: LoaderFunction = async ({ request }) => {
     const searchParams = new URLSearchParams(request.url.split('?')[1]);
     const invitationCode = searchParams.get('invitation_code');
+
+    if (!invitationCode) {
+        throw json({
+            message: "You need access to view this page"
+        }, { status: StatusCodes.FORBIDDEN });
+    }
 
     const res = await fetch(
         `http://localhost:8000/invites/${invitationCode}`,
@@ -19,7 +26,10 @@ const PlaylistLoader: LoaderFunction = async ({ request }) => {
         throw json(resData, { status: res.status });
     }
 
+    // check if the questionnaire has already been taken
+    // if yes, redirect to the playlist page
+
     return resData.data;
 }
 
-export default PlaylistLoader;
+export default MainLoader;

@@ -3,8 +3,13 @@ import Button from "@/components/button";
 import routes from "@/utils/routes";
 import { useState } from "react";
 import YouTube, { YouTubeProps, YouTubePlayer } from "react-youtube";
+import MainLoader from "./loader";
+import { useLoaderData } from "react-router";
 
 function HomePage() {
+  const data = useLoaderData()
+  console.log("gotten loader data: ", data)
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [youtubePlayer, setYoutubePlayer] = useState<YouTubePlayer>()
   const [showPlayBtn, setShowPlayBtn] = useState<boolean>(true)
@@ -105,3 +110,4 @@ function HomePage() {
 }
 
 export default HomePage;
+HomePage.loader = MainLoader

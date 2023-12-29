@@ -120,7 +120,7 @@ function Layout() {
           strokeOpacity="0.15"
         />
       </svg>
-      <main className="flex flex-col items-center pb-16 h-full">
+      <main className="flex flex-col items-center pb-16 h-full min-h-screen">
         <header className="h-24 w-full border-b-brand border flex justify-center items-center">
           <a href={routes.LANDING_PAGE}>
             <div className="font-bold text-xl text-brand">urogy.in</div>
