@@ -23,6 +23,8 @@ function HomePage() {
       controls: 1,
       color: 1,
       rel: 0,
+      listType: "playlist",
+      list: "PLLmrRTflOA_t0ulwjNZXlNlS5qKLgUtPB"
     },
   };
 

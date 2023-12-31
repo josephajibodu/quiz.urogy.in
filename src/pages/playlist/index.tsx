@@ -4,7 +4,6 @@ import PlaylistLoader from "./loader";
 import Alink from "@/components/a-link";
 import PlaylistError from "./error";
 import {
-  useActionData,
   useLoaderData,
   useNavigation,
   useSearchParams,
@@ -12,15 +11,33 @@ import {
 } from "react-router-dom";
 import PlaylistPageAction from "./action";
 import Loader from "./loading";
-import { useEffect } from "react";
-import { InvitationData } from "@/types";
+import { useEffect, useState } from "react";
+import { InvitationData, PlaylistData } from "@/types";
+import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
+import classNames from "classnames";
 
 function PlaylistPage() {
   const submit = useSubmit();
   const [searchParam] = useSearchParams();
-  const invitation = useLoaderData() as InvitationData;
-  const playlist = useActionData();
+  const {invitation, playlist} = useLoaderData() as {invitation:InvitationData, playlist: PlaylistData};
   const { state } = useNavigation();
+
+  // youtube playlist player
+  const [currentVideo, setCurrentVideo] = useState(playlist.items[1].contentDetails.videoId)
+  const [youtubePlayer, setYoutubePlayer] = useState<YouTubePlayer>();
+
+  const onReady = (event: YouTubeEvent) => {
+    setYoutubePlayer(event.target);
+  };
+
+  const handleVideoSelection = (videoId: string) => {
+    setCurrentVideo(videoId)
+  }
+
+  const handleNextVideo = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    youtubePlayer?.nextVideo()
+  }
 
   const handlePlaylistGeneration = () => {
     const data = {
@@ -33,10 +50,6 @@ function PlaylistPage() {
       encType: "application/json",
     });
   };
-
-  useEffect(() => {
-    console.log("playlist form action: ", playlist);
-  }, [invitation]);
 
   if (state !== "idle") return <Loader />;
 
@@ -70,10 +83,10 @@ function PlaylistPage() {
         </section>
       )}
 
-      {invitation.playlist != null && (
+      {playlist != null && (
         <>
           <section className="text-brand flex w-full flex-col py-12 px-4">
-            <h2 className="text-xl font-bold mb-10">
+            <h2 className="text-xl font-bold mb-10" onClick={handleNextVideo}>
               Your Tailored Playlist is Ready!
             </h2>
 
@@ -86,7 +99,7 @@ function PlaylistPage() {
             <a
               target="_blank"
               rel="noreferrer"
-              href="https://youtube.com"
+              href={`${invitation.playlist.link}`}
               className="w-fit mt-8"
             >
               <Button className="w-fit flex items-center gap-2">
@@ -110,26 +123,43 @@ function PlaylistPage() {
           <section className="text-brand w-full px-4">
             <div className="flex flex-col lg:flex-row w-full gap-4">
               <div className="w-full lg:w-7/12">
-                <div className="aspect-video lg:h-[400px] border-brand border-2 rounded-xl"></div>
+                <div className="aspect-video lg:h-[400px] border-brand border-2 rounded-xl overflow-hidden">
+                <YouTube
+                  className="w-full h-full"
+                  iframeClassName="w-full h-full"
+                  videoId={currentVideo}
+                  // opts={options}
+                  // onEnd={onEnd}
+                  onReady={onReady}
+                  // onPlay={onPlay}
+                  // onPause={onPause}
+                />
+                </div>
               </div>
 
               <div className="w-full lg:w-5/12 flex flex-col h-[400px] relative">
                 <div className="overflow-y-scroll pb-12">
-                  {Array(6)
-                    .fill(1)
-                    .map((_, i) => (
+                  {playlist.items
+                    .map((item, i) => (
                       <div
                         key={i.toString()}
-                        className="flex gap-4 cursor-pointer py-3 px-3 rounded-3xl hover:bg-white/50"
+                        className={classNames(
+                          `flex gap-4 cursor-pointer py-3 px-3 rounded-3xl hover:bg-white/50`,
+                          {
+                            'bg-white' : item.contentDetails.videoId == currentVideo
+                          }
+                        )}
+                        onClick={() => handleVideoSelection(item.contentDetails.videoId)}
                       >
-                        <div className="aspect-video h-20 border-brand border-2 rounded-xl"></div>
-                        <div>
-                          <p className="font-semibold text-base">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit.
+                        <div className="min-w-[120px] w-[120px] h-20 border-brand border-2 rounded-xl overflow-hidden">
+                          <img src={`${item.snippet.thumbnails.standard.url}`} className="w-full" />
+                        </div>
+                        <div className="flex flex-col flex-grow">
+                          <p className="font-semibold text-sm overflow-ellipsis">
+                            {item.snippet.title}
                           </p>
                           <span className="text-base">3.15</span>
-                        </div>
+                          </div>
                       </div>
                     ))}
                 </div>
