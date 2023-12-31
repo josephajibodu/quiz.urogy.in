@@ -29,7 +29,9 @@ const MainLoader: LoaderFunction = async ({ request }) => {
     // check if the questionnaire has already been taken
     // if yes, redirect to the playlist page
 
-    return resData.data;
+    return {
+        invitation: resData.data
+    };
 }
 
 export default MainLoader;

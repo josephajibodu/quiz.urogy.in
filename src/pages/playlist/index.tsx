@@ -11,33 +11,14 @@ import {
 } from "react-router-dom";
 import PlaylistPageAction from "./action";
 import Loader from "./loading";
-import { useEffect, useState } from "react";
 import { InvitationData, PlaylistData } from "@/types";
-import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
-import classNames from "classnames";
+import YoutubePlaylist from "./components/youtube-playlist";
 
 function PlaylistPage() {
   const submit = useSubmit();
   const [searchParam] = useSearchParams();
   const {invitation, playlist} = useLoaderData() as {invitation:InvitationData, playlist: PlaylistData};
   const { state } = useNavigation();
-
-  // youtube playlist player
-  const [currentVideo, setCurrentVideo] = useState(playlist.items[1].contentDetails.videoId)
-  const [youtubePlayer, setYoutubePlayer] = useState<YouTubePlayer>();
-
-  const onReady = (event: YouTubeEvent) => {
-    setYoutubePlayer(event.target);
-  };
-
-  const handleVideoSelection = (videoId: string) => {
-    setCurrentVideo(videoId)
-  }
-
-  const handleNextVideo = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    youtubePlayer?.nextVideo()
-  }
 
   const handlePlaylistGeneration = () => {
     const data = {
@@ -86,7 +67,7 @@ function PlaylistPage() {
       {playlist != null && (
         <>
           <section className="text-brand flex w-full flex-col py-12 px-4">
-            <h2 className="text-xl font-bold mb-10" onClick={handleNextVideo}>
+            <h2 className="text-xl font-bold mb-10">
               Your Tailored Playlist is Ready!
             </h2>
 
@@ -121,72 +102,11 @@ function PlaylistPage() {
             </a>
           </section>
           <section className="text-brand w-full px-4">
-            <div className="flex flex-col lg:flex-row w-full gap-4">
-              <div className="w-full lg:w-7/12">
-                <div className="aspect-video lg:h-[400px] border-brand border-2 rounded-xl overflow-hidden">
-                <YouTube
-                  className="w-full h-full"
-                  iframeClassName="w-full h-full"
-                  videoId={currentVideo}
-                  // opts={options}
-                  // onEnd={onEnd}
-                  onReady={onReady}
-                  // onPlay={onPlay}
-                  // onPause={onPause}
-                />
-                </div>
-              </div>
-
-              <div className="w-full lg:w-5/12 flex flex-col h-[400px] relative">
-                <div className="overflow-y-scroll pb-12">
-                  {playlist.items
-                    .map((item, i) => (
-                      <div
-                        key={i.toString()}
-                        className={classNames(
-                          `flex gap-4 cursor-pointer py-3 px-3 rounded-3xl hover:bg-white/50`,
-                          {
-                            'bg-white' : item.contentDetails.videoId == currentVideo
-                          }
-                        )}
-                        onClick={() => handleVideoSelection(item.contentDetails.videoId)}
-                      >
-                        <div className="min-w-[120px] w-[120px] h-20 border-brand border-2 rounded-xl overflow-hidden">
-                          <img src={`${item.snippet.thumbnails.standard.url}`} className="w-full" />
-                        </div>
-                        <div className="flex flex-col flex-grow">
-                          <p className="font-semibold text-sm overflow-ellipsis">
-                            {item.snippet.title}
-                          </p>
-                          <span className="text-base">3.15</span>
-                          </div>
-                      </div>
-                    ))}
-                </div>
-
-                {/* Next/Prev button to control the videos easily */}
-                <div className="absolute bottom-0 bg-red-300 w-full h-12">
-                  {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4.5v15m0 0l6.75-6.75M12 19.5l-6.75-6.75"
-                />
-              </svg> */}
-                </div>
-              </div>
-            </div>
+            <YoutubePlaylist playlist={playlist} />
 
             <Alink
               to={routes.ADDITIONAL_RESOURCES}
-              className="flex gap-4 text-brand underline text-base my-8"
+              className="inline-flex gap-4 text-brand underline text-base my-8"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

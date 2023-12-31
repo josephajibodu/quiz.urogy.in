@@ -8,7 +8,7 @@ import { useLoaderData } from "react-router";
 import { InvitationData } from "@/types";
 
 function HomePage() {
-  const invitation: InvitationData = useLoaderData();
+  const {invitation} = useLoaderData() as { invitation: InvitationData };
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [youtubePlayer, setYoutubePlayer] = useState<YouTubePlayer>();
@@ -21,37 +21,33 @@ function HomePage() {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
       controls: 1,
-      color: 1,
       rel: 0,
-      listType: "playlist",
-      list: "PLLmrRTflOA_t0ulwjNZXlNlS5qKLgUtPB"
     },
   };
 
   const onEnd: YouTubeProps["onEnd"] = (event) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    event.target.seekTo(0);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    event.target.pauseVideo();
+    void event.target.seekTo(0, true) 
+    void event.target.pauseVideo();
   };
 
   const onReady: YouTubeProps["onReady"] = (event) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    event.target.pauseVideo();
-
     setYoutubePlayer(event.target);
     setShowPlayBtn(true);
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    void event.target.pauseVideo()
   };
 
   const onPause: YouTubeProps["onPause"] = (event) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    event.target.pauseVideo();
+    void event.target.pauseVideo();
     setShowPlayBtn(true);
   };
 
   const onPlay: YouTubeProps["onPlay"] = (event) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    event.target.playVideo();
+    void event.target.playVideo();
     setShowPlayBtn(false);
   };
 
@@ -59,7 +55,7 @@ function HomePage() {
     if (!youtubePlayer) return;
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-    youtubePlayer.playVideo();
+    void youtubePlayer.playVideo();
     setShowPlayBtn(false);
   };
 
