@@ -1,7 +1,8 @@
+import InvitationFetcher from "@/fetchers/invitations";
 import { StatusCodes } from "http-status-codes";
 import { LoaderFunction, json } from "react-router";
 
-const QuizLoader: LoaderFunction = ({ request }) => {
+const QuizLoader: LoaderFunction = async ({ request }) => {
     const searchParams = new URLSearchParams(request.url.split('?')[1]);
     const invitationCode = searchParams.get('invitation_code');
 
@@ -11,7 +12,9 @@ const QuizLoader: LoaderFunction = ({ request }) => {
         }, { status: StatusCodes.FORBIDDEN });
     }
 
-    return invitationCode
+    const invitation = await InvitationFetcher.getInvitation(invitationCode)
+
+    return invitation
 }
 
 export default QuizLoader;

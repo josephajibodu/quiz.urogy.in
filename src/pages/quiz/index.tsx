@@ -3,6 +3,7 @@ import Progress from "@/components/progress";
 import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
 import {
+  useActionData,
   useLoaderData,
   useLocation,
   useNavigation,
@@ -13,6 +14,7 @@ import toast from "react-hot-toast";
 import QuizAction, { ActionData } from "./action";
 import Loader from "./loading";
 import QuizLoader from "./loader";
+import { InvitationData } from "@/types";
 
 const options = [
   { id: 0, text: "None of the time" },
@@ -58,9 +60,13 @@ function QuizPage() {
   const [currentQuizNo, setCurrentQuizNo] = useState(6);
   const [answers, setAnswers] = useState<number[]>(Array(6).fill(null));
 
-  const invitationCode = useLoaderData() as string;
+  const actionData = useActionData();
+  const invitation = useLoaderData() as InvitationData;
+  const [generating, setGenerating] = useState<Boolean>(false);
+
   const { state } = useNavigation();
   const [searchParam] = useSearchParams();
+  const invitationCode = searchParam.get('invitation_code') ?? invitation.token;
   const [actionType, setActionType] =
     useState<ActionData["action"]>("submit-quiz");
 
@@ -78,6 +84,22 @@ function QuizPage() {
     }
 
     setCurrentQuizNo(currentQuizNo + 1);
+  };
+
+  const generatePlaylist = () => {
+    console.log("trying to generate playlist")
+    setGenerating(true);
+
+    const data: ActionData = {
+      invitation_code: invitationCode,
+      action: "generate-playlist",
+    };
+
+    submit(data, {
+      method: "POST",
+      action: `/quiz?${searchParam.toString()}`,
+      encType: "application/json",
+    });
   };
 
   const handleSubmit = () => {
@@ -101,23 +123,6 @@ function QuizPage() {
       action: `/quiz?${searchParam.toString()}`,
       encType: "application/json",
     });
-
-    setActionType("generate-playlist");
-  };
-
-  const generatePlaylist = () => {
-    console.log("generating playlist");
-
-    const data: ActionData = {
-      invitation_code: invitationCode,
-      action: "generate-playlist",
-    };
-
-    submit(data, {
-      method: "POST",
-      action: `/quiz?${searchParam.toString()}`,
-      encType: "application/json",
-    });
   };
 
   const handleSelectOption = (value: number) => {
@@ -132,11 +137,12 @@ function QuizPage() {
   }, []);
 
   useEffect(() => {
-    if (actionType == "generate-playlist" && state == "idle") {
-      console.log("can generate playlist now");
-      generatePlaylist();
+    console.log('updated action data: ', actionData)
+    if (actionData && !generating) {
+      console.log('we can generate playlist now')
+      generatePlaylist()
     }
-  }, [actionType, state]);
+  }, [actionData, generating]);
 
   if (state !== "idle") return <Loader />;
 

@@ -4,19 +4,9 @@ import { ActionFunction, json, redirect } from "react-router"
 
 export interface ActionData { action: 'submit-quiz' | 'generate-playlist', responses?: number[], invitation_code: string }
 
-function promiseTimeout(milliseconds: number) {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve('Timeout finished!');
-        }, milliseconds);
-    });
-}
-
 
 const QuizAction: ActionFunction = async ({ request }) => {
     const data = await request.json() as ActionData
-
-    await promiseTimeout(10_000);
 
     if (data.action == 'submit-quiz') {
         return await submitQuiz(data)

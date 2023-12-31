@@ -1,3 +1,4 @@
+import Alink from "@/components/a-link";
 import routes from "@/utils/routes";
 import { Outlet } from "react-router-dom";
 
@@ -122,9 +123,9 @@ function Layout() {
       </svg>
       <main className="flex flex-col items-center pb-16 h-full min-h-screen">
         <header className="h-24 w-full border-b-brand border flex justify-center items-center">
-          <a href={routes.LANDING_PAGE}>
+          <Alink to={routes.LANDING_PAGE}>
             <div className="font-bold text-xl text-brand">urogy.in</div>
-          </a>
+          </Alink>
         </header>
 
         <div className="max-w-7xl w-full h-full flex flex-col items-center">
