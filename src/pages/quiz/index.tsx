@@ -3,9 +3,11 @@ import Progress from "@/components/progress";
 import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
 import {
+  redirect,
   useActionData,
   useLoaderData,
   useLocation,
+  useNavigate,
   useNavigation,
   useSearchParams,
   useSubmit,
@@ -15,6 +17,7 @@ import QuizAction, { ActionData } from "./action";
 import Loader from "./loading";
 import QuizLoader from "./loader";
 import { InvitationData } from "@/types";
+import routes from "@/utils/routes";
 
 const options = [
   { id: 0, text: "None of the time" },
@@ -62,11 +65,12 @@ function QuizPage() {
 
   const actionData = useActionData();
   const invitation = useLoaderData() as InvitationData;
-  const [generating, setGenerating] = useState<Boolean>(false);
+  const [generating, setGenerating] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const { state } = useNavigation();
   const [searchParam] = useSearchParams();
-  const invitationCode = searchParam.get('invitation_code') ?? invitation.token;
+  const invitationCode = searchParam.get("invitation_code") ?? invitation.token;
   const [actionType, setActionType] =
     useState<ActionData["action"]>("submit-quiz");
 
@@ -87,7 +91,7 @@ function QuizPage() {
   };
 
   const generatePlaylist = () => {
-    console.log("trying to generate playlist")
+    console.log("trying to generate playlist");
     setGenerating(true);
 
     const data: ActionData = {
@@ -137,12 +141,20 @@ function QuizPage() {
   }, []);
 
   useEffect(() => {
-    console.log('updated action data: ', actionData)
     if (actionData && !generating) {
-      console.log('we can generate playlist now')
-      generatePlaylist()
+      generatePlaylist();
     }
   }, [actionData, generating]);
+
+  // once, when the page is loaded, check if the questionnaire has been answered
+  // if yes, redirect to playlist page
+  useEffect(() => {
+    if (invitation.questionnaire) {
+      navigate(
+        `${routes.PERSONALIZED_PLAYLIST}?invitation_code=${invitationCode}`
+      );
+    }
+  }, []);
 
   if (state !== "idle") return <Loader />;
 
