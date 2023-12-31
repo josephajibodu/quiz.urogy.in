@@ -4,15 +4,14 @@ import { useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import PlaylistButton from "./playlist-button";
 
-function YoutubePlaylist({ playlist }: { playlist: PlaylistData }) {
+function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, playlist_id: string }) {
   const options: YouTubeProps["opts"] = {
     playerVars: {
       autoplay: 1,
       controls: 1,
       rel: 0,
       listType: 'playlist',
-      list: `PLLmrRTflOA_ty8pbIHx8yZWKObWOni9NK`,
-      // list: `PL${playlist.id}`,
+      list: playlist_id,
     },
   };
 
@@ -41,7 +40,6 @@ function YoutubePlaylist({ playlist }: { playlist: PlaylistData }) {
     
     if (curIndex < playlist.items.length - 1) {
       setCurrentVideoIndex(curIndex + 1)
-      console.log("index now: ", curIndex + 1)
       void youtubePlayer?.nextVideo()
     }
   };
@@ -51,7 +49,6 @@ function YoutubePlaylist({ playlist }: { playlist: PlaylistData }) {
     
     if (curIndex > 0) {
       setCurrentVideoIndex(curIndex - 1)
-      console.log("index now: ", curIndex - 1)
       void youtubePlayer?.previousVideo()
     }
   }

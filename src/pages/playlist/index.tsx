@@ -102,7 +102,7 @@ function PlaylistPage() {
             </a>
           </section>
           <section className="text-brand w-full px-4">
-            <YoutubePlaylist playlist={playlist} />
+            <YoutubePlaylist playlist_id={invitation.playlist.id} playlist={playlist} />
 
             <Alink
               to={routes.ADDITIONAL_RESOURCES}
