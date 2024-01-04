@@ -60,7 +60,7 @@ const questions = [
 function QuizPage() {
   const submit = useSubmit();
   const [totalNoOfQuiz] = useState(6);
-  const [currentQuizNo, setCurrentQuizNo] = useState(6);
+  const [currentQuizNo, setCurrentQuizNo] = useState(1);
   const [answers, setAnswers] = useState<number[]>(Array(6).fill(null));
 
   const actionData = useActionData();
@@ -71,9 +71,7 @@ function QuizPage() {
   const { state } = useNavigation();
   const [searchParam] = useSearchParams();
   const invitationCode = searchParam.get("invitation_code") ?? invitation.token;
-  const [actionType, setActionType] =
-    useState<ActionData["action"]>("submit-quiz");
-
+  
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
 
@@ -91,7 +89,6 @@ function QuizPage() {
   };
 
   const generatePlaylist = () => {
-    console.log("trying to generate playlist");
     setGenerating(true);
 
     const data: ActionData = {
@@ -134,11 +131,6 @@ function QuizPage() {
     updatedAnswers[currentQuizNo - 1] = value;
     setAnswers(updatedAnswers);
   };
-
-  // TODO: remove this after testing
-  useEffect(() => {
-    setAnswers([2, 3, 5, 4, 1, 3]);
-  }, []);
 
   useEffect(() => {
     if (actionData && !generating) {
