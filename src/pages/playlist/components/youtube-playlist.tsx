@@ -3,10 +3,8 @@ import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import PlaylistButton from "./playlist-button";
-import { promiseTimeout } from "@/utils";
 
 const VIDEO_HEIGHT = 104;
-const PLAYLIST_HEIGHT = 500;
 
 function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, playlist_id: string }) {
   const playlistContainerRef = useRef<HTMLDivElement>(null);
@@ -42,9 +40,9 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
     }
   };
 
-  const handleVideoSelection = async (videoPosition: number) => {
+  const handleVideoSelection = (videoPosition: number) => {
     // setCurrentVideoIndex(videoPosition);
-    await youtubePlayer?.loadPlaylist({
+    void youtubePlayer?.loadPlaylist({
       listType: 'playlist',
         list: playlist_id,
         index: videoPosition,
