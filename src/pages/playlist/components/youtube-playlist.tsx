@@ -1,13 +1,24 @@
 import { PlaylistData } from "@/types";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from "react-youtube";
 import PlaylistButton from "./playlist-button";
+import { promiseTimeout } from "@/utils";
+
+const VIDEO_HEIGHT = 104;
+const PLAYLIST_HEIGHT = 500;
 
 function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, playlist_id: string }) {
+  const playlistContainerRef = useRef<HTMLDivElement>(null);
+
+  const syncPlaylist = () => {
+    const videoPosition = currentVideoIndex * VIDEO_HEIGHT;
+    playlistContainerRef.current?.scrollTo({top: videoPosition, behavior: 'smooth'})
+  }
+
   const options: YouTubeProps["opts"] = {
     playerVars: {
-      autoplay: 1,
+      autoplay: 0,
       controls: 1,
       rel: 0,
       listType: 'playlist',
@@ -31,8 +42,15 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
     }
   };
 
-  const handleVideoSelection = (videoId: string) => {
-    setCurrentVideoIndex(Number(videoId));
+  const handleVideoSelection = async (videoPosition: number) => {
+    // setCurrentVideoIndex(videoPosition);
+    await youtubePlayer?.loadPlaylist({
+      listType: 'playlist',
+        list: playlist_id,
+        index: videoPosition,
+        startSeconds: 0,
+        suggestedQuality: 'default',
+    })
   };
 
   const handleNextVideo = () => {
@@ -53,6 +71,12 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
     }
   }
 
+  // sync playlist whenever video changes
+  useEffect(() => {
+    syncPlaylist()
+  }, [currentVideoIndex])
+
+
   return (
     <div className="flex flex-col lg:flex-row w-full gap-0">
       <div className="w-full lg:w-9/12">
@@ -61,8 +85,6 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
             className="w-full h-full"
             iframeClassName="w-full h-full"
             opts={options}
-            onEnd={() => console.log("e don end")}
-            onError={() => console.log("e don get error")}
             onPlay={onPlay}
             onReady={onReady}
           />
@@ -70,7 +92,7 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
       </div>
 
       <div className="w-full lg:w-3/12 flex flex-col h-[500px] relative">
-        <div className="overflow-y-scroll pb-12 pt-4">
+        <div ref={playlistContainerRef} className="overflow-y-scroll pb-12 pt-4">
           {playlist.items.map((item, i) => (
             <div
               key={i.toString()}
@@ -80,7 +102,7 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
                   "bg-white": i == currentVideoIndex,
                 }
               )}
-              onClick={() => handleVideoSelection(item.contentDetails.videoId)}
+              onClick={() => handleVideoSelection(i)}
             >
               <div className="min-w-[120px] w-[120px] h-20 border-brand border-2 rounded-xl overflow-hidden">
                 <img
@@ -89,7 +111,7 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
                 />
               </div>
               <div className="flex flex-col flex-grow">
-                <p className="lg:font-semibold text-base lg:text-xs overflow-ellipsis">
+                <p className="lg:font-semibold text-base lg:text-xs line-clamp-4" title={item.snippet.title}>
                   {item.snippet.title}
                 </p>
                 {/* <span className="text-xs">3.15</span> */}
@@ -104,8 +126,8 @@ function YoutubePlaylist({ playlist, playlist_id }: { playlist: PlaylistData, pl
         >
           <PlaylistButton onClick={handlePrevVideo} disabled={currentVideoIndex <= 0}>Prev</PlaylistButton>
           <PlaylistButton onClick={handleNextVideo} disabled={currentVideoIndex >= playlist.items.length - 1}>Next</PlaylistButton>
-            <div className="flex-grow"></div>
-          <PlaylistButton className="rounded-none border-brand border-[2px] ">
+          <div className="flex-grow"></div>
+          <PlaylistButton className="rounded-none border-brand border-[2px] " onClick={syncPlaylist}>
             <div className="flex gap-2 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
