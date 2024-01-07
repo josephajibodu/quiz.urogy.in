@@ -4,7 +4,7 @@ export interface ActionData { action: 'submit-quiz' | 'generate-playlist', respo
 
 const generatePlaylist = async (data: Pick<ActionData, 'invitation_code'>) => {
     const res = await fetch(
-        'http://localhost:8000/questionnaire/playlist',
+        `${import.meta.env.VITE_API_URL}/questionnaire/playlist`,
         {
             method: 'post',
             body: JSON.stringify(data),

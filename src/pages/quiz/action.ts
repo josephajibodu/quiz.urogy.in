@@ -17,7 +17,7 @@ const QuizAction: ActionFunction = async ({ request }) => {
 
 const submitQuiz = async (data: Omit<ActionData, 'action'>) => {
     const res = await fetch(
-        'http://localhost:8000/questionnaire',
+        `${import.meta.env.VITE_API_URL}/questionnaire`,
         {
             method: 'post',
             body: JSON.stringify(data),

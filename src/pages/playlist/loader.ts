@@ -5,7 +5,7 @@ const PlaylistLoader: LoaderFunction = async ({ request }) => {
     const invitationCode = searchParams.get('invitation_code');
 
     const inviteRes = await fetch(
-        `http://localhost:8000/invites/${invitationCode}`,
+        `${import.meta.env.VITE_API_URL}/invites/${invitationCode}`,
         {
             headers: {
                 "Content-Type": "application/json",
@@ -20,7 +20,7 @@ const PlaylistLoader: LoaderFunction = async ({ request }) => {
     }
 
     const playlistRes = await fetch(
-        `http://localhost:8000/questionnaire/playlist?invitation_code=${invitationCode}`,
+        `${import.meta.env.VITE_API_URL}/questionnaire/playlist?invitation_code=${invitationCode}`,
         {
             headers: {
                 "Content-Type": "application/json",

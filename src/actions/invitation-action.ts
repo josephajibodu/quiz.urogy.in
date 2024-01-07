@@ -4,7 +4,7 @@ export interface ActionData { action: 'submit-quiz' | 'generate-playlist', respo
 
 const getInvitation = async (invitationCode: string) => {
     const res = await fetch(
-        `http://localhost:8000/invites/${invitationCode}`,
+        `${import.meta.env.VITE_API_URL}/invites/${invitationCode}`,
         {
             headers: {
                 "Content-Type": "application/json",

@@ -12,7 +12,7 @@ const MainLoader: LoaderFunction = async ({ request }) => {
     }
 
     const res = await fetch(
-        `http://localhost:8000/invites/${invitationCode}`,
+        `${import.meta.env.VITE_API_URL}/invites/${invitationCode}`,
         {
             headers: {
                 "Content-Type": "application/json",
