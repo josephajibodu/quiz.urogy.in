@@ -3,17 +3,15 @@ import Progress from "@/components/progress";
 import Button from "@/components/button";
 import QuizOption from "@/components/quiz-option";
 import {
-  redirect,
   useActionData,
   useLoaderData,
-  useLocation,
   useNavigate,
   useNavigation,
   useSearchParams,
   useSubmit,
 } from "react-router-dom";
 import toast from "react-hot-toast";
-import QuizAction, { ActionData } from "./action";
+import QuizAction from "./action";
 import Loader from "./loading";
 import QuizLoader from "./loader";
 import { InvitationData } from "@/types";
@@ -91,7 +89,7 @@ function QuizPage() {
   const generatePlaylist = () => {
     setGenerating(true);
 
-    const data: ActionData = {
+    const data = {
       invitation_code: invitationCode,
       action: "generate-playlist",
     };
@@ -105,13 +103,13 @@ function QuizPage() {
 
   const handleSubmit = () => {
     toast.dismiss();
-    const data: ActionData = {
+    const data = {
       responses: answers,
       invitation_code: invitationCode,
       action: "submit-quiz",
     };
 
-    const quizNotCompleted = data.responses!.some(
+    const quizNotCompleted = data.responses.some(
       (response) => typeof response != "number"
     );
 

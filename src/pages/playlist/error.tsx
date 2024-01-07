@@ -8,7 +8,6 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "react-router";
-import { useSearchParams, useSubmit } from "react-router-dom";
 
 function PlaylistError() {
   const error = useRouteError() as ErrorResponse;

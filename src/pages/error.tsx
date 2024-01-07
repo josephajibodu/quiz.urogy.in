@@ -4,10 +4,10 @@ import NotFoundIcon from "@/components/not-found-icon";
 import routes from "@/utils/routes";
 import { getReasonPhrase } from "http-status-codes";
 import { ReactElement } from "react";
-import { ErrorResponse, isRouteErrorResponse, useRouteError } from "react-router";
+import { isRouteErrorResponse, useRouteError } from "react-router";
 
 function Error() {
-    const error = useRouteError() as ErrorResponse;
+    const error = useRouteError();
     const isResponseError = isRouteErrorResponse(error)
 
     return (
@@ -36,7 +36,8 @@ function Error() {
                         Unexpected Error
                     </p>
                     <p className="text-lg md:text-xl lg:text-2xl text-brand my-12">
-                        {error.data?.message ?? error.message}
+                        {/* eslint-disable-next-line @typescript-eslint/no-unsafe-member-access */}
+                        {(error as {message?: string}).message}
                     </p>
                 </>}
 
