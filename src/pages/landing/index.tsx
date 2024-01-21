@@ -75,8 +75,8 @@ function HomePage() {
         </div>
       </h1>
 
-      {/* handled very small screen size first (like the half screen of flip phones), then normal small phone size, then common phone size, then tablets and then others (latptop etc) */}
-      <div className="aspect-video border-brand border-2 w-[250px] min-[350px]:w-[330px] min-[361px]:w-[350px] min-[500px]:w-[400px] sm:w-[600px] lg:w-[800px]  rounded-3xl mt-20 lg:mt-28 relative overflow-hidden">
+      {/* handled very small screen size first (like the half screen of flip phones), then normal small phone size, then common phone size, then tablets and then laptops and finally very large screens */}
+      <div className="aspect-video border-brand border-2 w-[250px] min-[350px]:w-[330px] min-[361px]:w-[350px] min-[500px]:w-[400px] sm:w-[600px] lg:w-[800px] 2xl:w-[1000px]  rounded-3xl mt-20 lg:mt-28 relative overflow-hidden">
         {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <YouTube
           className="w-full h-full"
