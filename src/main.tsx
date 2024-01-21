@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import '@/index.css'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
 import HomePage from '@/pages/landing'
 import Layout from '@/pages/layout'
 import QuizPage from '@/pages/quiz'
@@ -10,7 +10,6 @@ import routes from './utils/routes'
 import { Toaster } from 'react-hot-toast'
 import Error from './pages/error'
 import RootLoader from './pages/loader'
-
 
 const router = createBrowserRouter([
   {

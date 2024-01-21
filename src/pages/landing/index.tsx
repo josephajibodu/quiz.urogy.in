@@ -60,10 +60,10 @@ function HomePage() {
   };
 
   return (
-    <>
-      <h1 className="text-center text-5xl lg:text-8xl mt-20 lg:mt-40 leading-[4rem] lg:leading-[6.4rem]">
-        <div>Urogynecology</div>
-        <div className="w-fit flex items-center gap-4 lg:gap-14">
+    <div className="px-4 gap-8 flex flex-col items-center">
+      <h1 className="text-center text-[1.5rem] min-[350px]:text-[2.5rem] min-[430px]:text-5xl xs:text-5xl lg:text-8xl mt-20 lg:mt-40 flex flex-col items-center">
+        <div className="max-[300px]:leading-[2rem] leading-[4rem] lg:leading-[6.4rem]">Urogynecology</div>
+        <div className="w-fit flex items-center gap-4 lg:gap-14 max-[300px]:leading-[2rem] leading-[4rem] lg:leading-[6.4rem]">
           Patient
           <span className="block lg:hidden border-4 border-accent rounded-full w-[120px] lg:w-[200px] h-10"></span>
           <span className="hidden lg:block border-8 border-accent rounded-full w-[500px] h-20"></span>
@@ -71,11 +71,12 @@ function HomePage() {
         <div className="w-fit flex items-center gap-4 lg:gap-8 relative">
           <span className="hidden lg:block border-8 bg-accent border-accent rounded-full w-[150px] h-20"></span>
           <span className="block lg:hidden border-8 bg-accent border-accent rounded-full w-[50px] h-10 absolute top-[100%]"></span>
-          <span>Education App</span>
+          <span className="max-[300px]:leading-[2rem] leading-[4rem] lg:leading-[6.4rem]">Education App</span>
         </div>
       </h1>
 
-      <div className="aspect-video border-brand border-2 h-52 lg:h-[600px] rounded-3xl mt-28 relative overflow-hidden">
+      {/* handled very small screen size first (like the half screen of flip phones), then normal small phone size, then common phone size, then tablets and then others (latptop etc) */}
+      <div className="aspect-video border-brand border-2 w-[250px] min-[350px]:w-[330px] min-[361px]:w-[350px] min-[500px]:w-[400px] sm:w-[600px] lg:w-[800px]  rounded-3xl mt-20 lg:mt-28 relative overflow-hidden">
         {/* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */}
         <YouTube
           className="w-full h-full"
@@ -113,17 +114,17 @@ function HomePage() {
       </div>
 
       {invitation.questionnaire === null && (
-        <Alink to={routes.QUIZ} className="mt-16">
+        <Alink to={routes.QUIZ}>
           <Button>Start the Questionnaire</Button>
         </Alink>
       )}
 
       {invitation.questionnaire !== null && (
-        <Alink to={routes.PERSONALIZED_PLAYLIST} className="mt-16">
+        <Alink to={routes.PERSONALIZED_PLAYLIST}>
           <Button>View Personalized Playlist</Button>
         </Alink>
       )}
-    </>
+    </div>
   );
 }
 
