@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import '@/index.css'
-import { RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import HomePage from '@/pages/landing'
 import Layout from '@/pages/layout'
 import QuizPage from '@/pages/quiz'
