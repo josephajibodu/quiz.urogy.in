@@ -13,6 +13,7 @@ import PlaylistPageAction from "./action";
 import Loader from "./loading";
 import { InvitationData, PlaylistData } from "@/types";
 import YoutubePlaylist from "./components/youtube-playlist";
+import { useEffect } from "react";
 
 function PlaylistPage() {
   const submit = useSubmit();
@@ -31,6 +32,10 @@ function PlaylistPage() {
       encType: "application/json",
     });
   };
+
+  useEffect(() => {
+    scrollTo(0,0)
+  }, [])
 
   if (state !== "idle") return <Loader />;
 
@@ -101,7 +106,8 @@ function PlaylistPage() {
               </Button>
             </a>
           </section>
-          <section className="text-brand w-full px-4">
+          <section className="text-brand w-full px-4 sticky top-0">
+
             <YoutubePlaylist playlist_id={invitation.playlist.id} playlist={playlist} />
 
             <Alink

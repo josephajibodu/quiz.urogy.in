@@ -1,5 +1,5 @@
 export default {
-    LANDING_PAGE: '',
+    LANDING_PAGE: '/',
     QUIZ: '/quiz',
     LOADING_PLAYLIST: '/generating-playlist',
     PERSONALIZED_PLAYLIST: '/personalized-playlist',

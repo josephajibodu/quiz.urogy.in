@@ -72,8 +72,9 @@ function QuizPage() {
   
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
-
+    
     setCurrentQuizNo(currentQuizNo - 1);
+    scrollTo({ top: 0, behavior: 'smooth' })
   };
 
   const handleNextAction = () => {
@@ -83,6 +84,7 @@ function QuizPage() {
       return toast.error("You must select an option");
     }
 
+    scrollTo({ top: -100, behavior: 'smooth' })
     setCurrentQuizNo(currentQuizNo + 1);
   };
 
@@ -186,7 +188,7 @@ function QuizPage() {
           ))}
         </div>
 
-        <div className="flex justify-between lg:justify-center lg:gap-24 w-full fixed left-0 bottom-0 pb-8 px-4">
+        <div className="flex justify-between lg:justify-center lg:gap-24 w-full mt-12 pb-8 px-4">
           <Button onClick={handlePrevAction} disabled={currentQuizNo <= 1}>
             Previous
           </Button>
