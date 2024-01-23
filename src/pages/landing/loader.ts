@@ -29,7 +29,8 @@ const MainLoader: LoaderFunction = async ({ request }) => {
 
     // check if the questionnaire has already been taken
     // if yes, redirect to the playlist page
-    if (resData.data.questionnaire) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+    if ((resData.data as any).questionnaire) {
         return redirect(`${routes.PERSONALIZED_PLAYLIST}?invitation_code=${invitationCode}`)
     }
 
