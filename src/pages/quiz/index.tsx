@@ -69,12 +69,12 @@ function QuizPage() {
   const { state } = useNavigation();
   const [searchParam] = useSearchParams();
   const invitationCode = searchParam.get("invitation_code") ?? invitation.token;
-  
+
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
-    
+
     setCurrentQuizNo(currentQuizNo - 1);
-    scrollTo({ top: 0, behavior: 'smooth' })
+    scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleNextAction = () => {
@@ -84,7 +84,7 @@ function QuizPage() {
       return toast.error("You must select an option");
     }
 
-    scrollTo({ top: -100, behavior: 'smooth' })
+    scrollTo({ top: -100, behavior: "smooth" });
     setCurrentQuizNo(currentQuizNo + 1);
   };
 
@@ -141,6 +141,9 @@ function QuizPage() {
   // once, when the page is loaded, check if the questionnaire has been answered
   // if yes, redirect to playlist page
   useEffect(() => {
+    // scroll to the top of the page
+    scrollTo({ top: -100, behavior: "smooth" });
+
     if (invitation.questionnaire) {
       navigate(
         `${routes.PERSONALIZED_PLAYLIST}?invitation_code=${invitationCode}`
