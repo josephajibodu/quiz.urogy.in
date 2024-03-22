@@ -4,7 +4,7 @@ import { LoaderFunction, json, redirect } from "react-router";
 
 const MainLoader: LoaderFunction = async ({ request }) => {
     const searchParams = new URLSearchParams(request.url.split('?')[1]);
-    const invitationCode = searchParams.get('invitation_code');
+    const invitationCode = searchParams.get('code');
 
     if (!invitationCode) {
         throw json({
@@ -31,7 +31,7 @@ const MainLoader: LoaderFunction = async ({ request }) => {
     // if yes, redirect to the playlist page
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     if ((resData.data as any).questionnaire) {
-        return redirect(`${routes.PERSONALIZED_PLAYLIST}?invitation_code=${invitationCode}`)
+        return redirect(`${routes.PERSONALIZED_PLAYLIST}?code=${invitationCode}`)
     }
 
     return {

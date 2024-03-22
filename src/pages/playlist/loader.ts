@@ -2,7 +2,7 @@ import { LoaderFunction, json } from "react-router";
 
 const PlaylistLoader: LoaderFunction = async ({ request }) => {
     const searchParams = new URLSearchParams(request.url.split('?')[1]);
-    const invitationCode = searchParams.get('invitation_code');
+    const invitationCode = searchParams.get('code');
 
     const inviteRes = await fetch(
         `${import.meta.env.VITE_API_URL}/invites/${invitationCode}`,
@@ -20,7 +20,7 @@ const PlaylistLoader: LoaderFunction = async ({ request }) => {
     }
 
     const playlistRes = await fetch(
-        `${import.meta.env.VITE_API_URL}/questionnaire/playlist?invitation_code=${invitationCode}`,
+        `${import.meta.env.VITE_API_URL}/questionnaire/playlist?code=${invitationCode}`,
         {
             headers: {
                 "Content-Type": "application/json",

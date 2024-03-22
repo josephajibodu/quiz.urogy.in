@@ -4,7 +4,7 @@ import { LoaderFunction, json } from "react-router";
 
 const QuizLoader: LoaderFunction = async ({ request }) => {
     const searchParams = new URLSearchParams(request.url.split('?')[1]);
-    const invitationCode = searchParams.get('invitation_code');
+    const invitationCode = searchParams.get('code');
 
     if (!invitationCode) {
         throw json({

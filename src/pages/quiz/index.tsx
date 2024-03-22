@@ -68,7 +68,7 @@ function QuizPage() {
 
   const { state } = useNavigation();
   const [searchParam] = useSearchParams();
-  const invitationCode = searchParam.get("invitation_code") ?? invitation.token;
+  const invitationCode = searchParam.get("code") ?? invitation.token;
 
   const handlePrevAction = () => {
     if (currentQuizNo == 1) return;
@@ -145,9 +145,7 @@ function QuizPage() {
     scrollTo({ top: -100, behavior: "smooth" });
 
     if (invitation.questionnaire) {
-      navigate(
-        `${routes.PERSONALIZED_PLAYLIST}?invitation_code=${invitationCode}`
-      );
+      navigate(`${routes.PERSONALIZED_PLAYLIST}?code=${invitationCode}`);
     }
   }, []);
 

@@ -39,7 +39,7 @@ const submitQuiz = async (data: Omit<ActionData, 'action'>) => {
 const generatePlaylist = async (data: Pick<ActionData, 'invitation_code'>) => {
     await PlaylistAction.generate(data) as { message: string };
 
-    return redirect(`${routes.PERSONALIZED_PLAYLIST}?invitation_code=${data.invitation_code}`)
+    return redirect(`${routes.PERSONALIZED_PLAYLIST}?code=${data.invitation_code}`)
 }
 
 export default QuizAction;

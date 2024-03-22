@@ -18,12 +18,15 @@ import { useEffect } from "react";
 function PlaylistPage() {
   const submit = useSubmit();
   const [searchParam] = useSearchParams();
-  const {invitation, playlist} = useLoaderData() as {invitation:InvitationData, playlist: PlaylistData};
+  const { invitation, playlist } = useLoaderData() as {
+    invitation: InvitationData;
+    playlist: PlaylistData;
+  };
   const { state } = useNavigation();
 
   const handlePlaylistGeneration = () => {
     const data = {
-      invitation_code: searchParam.get("invitation_code"),
+      invitation_code: searchParam.get("code"),
     };
 
     submit(data, {
@@ -34,8 +37,8 @@ function PlaylistPage() {
   };
 
   useEffect(() => {
-    scrollTo(0,0)
-  }, [])
+    scrollTo(0, 0);
+  }, []);
 
   if (state !== "idle") return <Loader />;
 
@@ -107,8 +110,10 @@ function PlaylistPage() {
             </a>
           </section>
           <section className="text-brand w-full px-4 sticky top-0">
-
-            <YoutubePlaylist playlist_id={invitation.playlist.id} playlist={playlist} />
+            <YoutubePlaylist
+              playlist_id={invitation.playlist.id}
+              playlist={playlist}
+            />
 
             <Alink
               to={routes.ADDITIONAL_RESOURCES}
