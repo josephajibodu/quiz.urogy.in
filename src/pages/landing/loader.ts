@@ -23,7 +23,7 @@ const MainLoader: LoaderFunction = async ({ request }) => {
 
     const resData = await res.json() as { message: string, data?: unknown, response_code?: string, error?: unknown };
 
-    if (!res.ok && resData.response_code != "PLAYLIST_NOT_GENERATED") {
+    if (!res.ok) {
         throw json(resData, { status: res.status });
     }
 

@@ -30,13 +30,13 @@ const PlaylistLoader: LoaderFunction = async ({ request }) => {
 
     const playlistData = await playlistRes.json() as { message: string, data?: unknown, response_code?: string, error?: unknown };
 
-    if (!playlistRes.ok) {
+    if (!playlistRes.ok && playlistData.response_code != "PLAYLIST_NOT_GENERATED") {
         throw json(playlistData, { status: playlistRes.status });
     }
 
     return {
         invitation: inviteData.data,
-        playlist: playlistData.data
+        playlist: playlistRes.ok ? playlistData.data : null
     };
 }
 
