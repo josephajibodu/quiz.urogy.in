@@ -20,7 +20,7 @@ const PlaylistLoader: LoaderFunction = async ({ request }) => {
     }
 
     const playlistRes = await fetch(
-        `${import.meta.env.VITE_API_URL}/questionnaire/playlist?code=${invitationCode}`,
+        `${import.meta.env.VITE_API_URL}/questionnaire/playlist?invitation_code=${invitationCode}`,
         {
             headers: {
                 "Content-Type": "application/json",
